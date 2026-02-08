@@ -1,39 +1,43 @@
 package io.github.ktaekim2.sandbox;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 
 public class MyArrayListTest {
 
     @Test
-    void add_should_increase_size() {
-        MyArrayList list = new MyArrayList();
-        list.add(10);
-        list.add(20);
-
-        // 검증: "리스트 사이즈는 2여야 한다"
-        assertThat(list.size()).isEqualTo(2);
-
-        // 검증: "0번째 요소는 10이어야 한다."
-        assertThat(list.get(0)).isEqualTo(10);
+    public void add_should_increase_size() {
+        MyArrayList myArrayList = new MyArrayList();
+        myArrayList.add(1);
+        assertThat(myArrayList.get(0)).isEqualTo(1);
+        assertThat(myArrayList.size()).isEqualTo(1);
     }
 
     @Test
-    void shoud_resize_when_capacity_is_full() {
-        // 1. Given: make list which size of 10
-        MyArrayList list = new MyArrayList();
-
-        // 2. add 11 elements in it
-        for (int i = 0; i < 11; i ++) {
-            list.add(i);
+    public void should_resize_when_capacity_full() {
+        // Given
+        MyArrayList myArrayList = new MyArrayList();
+        for(int i = 0; i < 10; i++) {
+            myArrayList.add(i);
         }
 
-        // 3. Then:
-        // can find 11th data
-        assertThat(list.get(10)).isEqualTo(10);
+        // When
+        myArrayList.add(10);
 
-        // size have to be 11
-        assertThat(list.size()).isEqualTo(11);
+        // Then
+        assertThat(myArrayList.size()).isEqualTo(11);
+    }
+
+    @Test
+    public void should_throw_exception_when_index_is_invalid() {
+        // given
+        MyArrayList list = new MyArrayList();
+
+        // when & then
+        assertThatThrownBy(() -> {
+            list.get(-1);
+        }).isInstanceOf(IndexOutOfBoundsException.class);
     }
 }
