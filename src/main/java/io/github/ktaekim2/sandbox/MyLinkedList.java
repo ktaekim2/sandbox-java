@@ -2,10 +2,9 @@ package io.github.ktaekim2.sandbox;
 
 public class MyLinkedList {
 
-    // inner class (data + next address)
     private static class Node {
         int item;
-        Node next; // remote controller which indicates next node.
+        Node next;
 
         Node(int item) {
             this.item = item;
@@ -13,7 +12,7 @@ public class MyLinkedList {
         }
     }
 
-    private Node head; // first node (head)
+    private Node head;
     private int size;
 
     public MyLinkedList() {
@@ -22,7 +21,6 @@ public class MyLinkedList {
     }
 
     public void add(int value) {
-
         if (head == null) {
             head = new Node(value);
         } else {
@@ -34,13 +32,16 @@ public class MyLinkedList {
 
             curr.next = new Node(value);
         }
+
         size++;
     }
 
+    public int size() {
+        return size;
+    }
+
     public int get(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
-        }
+        checkIndex(index);
 
         Node curr = this.head;
 
@@ -49,47 +50,31 @@ public class MyLinkedList {
         }
 
         return curr.item;
+
     }
 
-    public void add(int index, int value) {
-        if (index < 0 || index > size) {
+    private void checkIndex(int index) {
+        if (index < 0 || index > size - 1) {
             throw new IndexOutOfBoundsException();
         }
-
-        Node prev = head;
-        Node newNode = new Node(value);
-        if(index == 0) {
-            newNode.next = prev;
-            this.head = newNode;
-        } else {
-        for (int i = 0; i < index - 1; i++) {
-            prev = prev.next;
-        }
-        newNode.next = prev.next;
-        prev.next = newNode;
-    }
-        size++;
-    }
-
-    public int size() {
-        return size;
     }
 
     public void remove(int index) {
-        if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException();
+        checkIndex(index);
+
+        if (index == 0) {
+            head = head.next;
+            size--;
+            return;
         }
 
-        Node prev = head;
+        Node curr = this.head;
 
-        if(index == 0) {
-            this.head = head.next;
-        } else {
         for (int i = 0; i < index - 1; i++) {
-            prev = prev.next;
+            curr = curr.next;
         }
 
-        prev.next = prev.next.next;
-    }
+        curr.next = curr.next.next;
         size--;
-    }}
+    }
+}

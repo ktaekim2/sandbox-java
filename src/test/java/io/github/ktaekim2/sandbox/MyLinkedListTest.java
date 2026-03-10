@@ -7,47 +7,33 @@ import org.junit.jupiter.api.Test;
 public class MyLinkedListTest {
 
     @Test
-    public void add_should_work_TT() {
-        // given
+    public void add_should_increase_size() {
         MyLinkedList list = new MyLinkedList();
+        list.add(5);
+
+        assertThat(list.size()).isEqualTo(1);
+        assertThat(list.get(0)).isEqualTo(5);
+    }
+
+    private MyLinkedList initLinkedList() {
+        MyLinkedList list = new MyLinkedList();
+
+        for (int i = 0; i < 5; i++) {
+            list.add(i);
+        }
+
+        return list;
+    }
+
+    @Test
+    public void remove_should_decrease_sise() {
+        // given
+        MyLinkedList list = initLinkedList();
 
         // when
-        list.add(1);
-        list.add(2);
-
-        // then
-        assertThat(list.get(0)).isEqualTo(1);
-        assertThat(list.get(1)).isEqualTo(2);
-    }
-
-    @Test
-    void should_insert_at_index() {
-        // Given
-        MyLinkedList list = new MyLinkedList();
-
-        // When
-        list.add(10);
-        list.add(30);
-        list.add(1, 20);
-
-        // Then
-        assertThat(list.get(1)).isEqualTo(20);
-        assertThat(list.get(2)).isEqualTo(30);
-    }
-
-    @Test
-    void should_remove_at_index() {
-        // Given
-        MyLinkedList list = new MyLinkedList();
-
-        // When
-        list.add(10);
-        list.add(20);
-        list.add(30);
         list.remove(1);
 
-        // Then
-        assertThat(list.size()).isEqualTo(2);
-        assertThat(list.get(1)).isEqualTo(30);
+        // then
+        assertThat(list.size()).isEqualTo(4);
     }
 }
