@@ -40,13 +40,16 @@ public class MyHashMap {
     }
 
     public int get(int key) {
-        Node cur = buckets[index(key)];
+        int idx = index(key);
+        Node cur = buckets[idx];
+
         while (cur != null) {
             if (cur.key == key) {
                 return cur.value;
             }
             cur = cur.next;
         }
+
         return -1;
     }
 
@@ -56,16 +59,21 @@ public class MyHashMap {
         Node prev = null;
 
         while (cur != null) {
+
             if (cur.key == key) {
                 if (prev == null) {
                     buckets[idx] = cur.next;
                 } else {
                     prev.next = cur.next;
                 }
+
                 return;
             }
+
             prev = cur;
             cur = cur.next;
+
         }
+
     }
 }
